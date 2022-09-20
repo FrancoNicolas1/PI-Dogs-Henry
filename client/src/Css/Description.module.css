@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&display=swap');
+.container{
+    background-image: url("../Imagenes/pasitos.jpg");
+    font-family: "Lato", sans-serif;
+}
+
+
+.title {
+    text-align: center;
+}
+.info{
+    margin: 50px;
+    display: flex;
+    background-color: aqua;
+    border-radius: 50px;
+}
+.info img{
+    height: 400px;
+    width: 500px;
+}
+.dog{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-left: 150px;
+    
+}
+.button{
+    background-color: red;
+    padding: 15px 32px;
+    border-radius: 50px;
+    font-size: 16px;
+    border:none;
+    transition-duration: 0.4s;
+
+}
+.button:hover{
+    background-color: #4CAF50;
+    color: white;
+}
+.caja{
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,18 @@
+.container{ 
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    margin: 10px;
+}
+.select{
+    background-color: red;
+    padding: 10px 32px;
+    border-radius: 50px;
+    font-size: 16px;
+    border:none;
+    transition-duration: 0.4s;
+}
+.select:hover{
+    background-color: #4CAF50;
+    color: white;
+}

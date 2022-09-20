@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+.image{
+    width: 300px;
+    height: 250px;
+    
+  
+}
+.conten{
+  text-align: center;
+  margin: 10px;
+  width: 300px;
+  height: 525px;
+  
+  border-radius: 20px;
+  transition: all 400ms ease;
+  box-shadow: 0px 1px 10px rgba(0,0,0,1.0);
+  background: rgb(255,255,255);
+background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(250,235,249,1) 0%, rgba(18,59,166,1) 15%, rgba(22,74,230,1) 25%, rgba(16,161,231,1) 65%);
+
+}
+.conten:hover{
+    transform: translateY(-3%);
+}
+.h1{
+    height: 64px;
+    font-family: 'Open Sans', sans-serif;
+}
+.p{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+}
