@@ -35,10 +35,7 @@
     border:none;
     transition-duration: 0.4s;
 }
-.option:hover{
 
-    color: white;
-}
 .select{
     background-color: red;
     padding: 10px 32px;
@@ -50,4 +47,8 @@
 .select:hover{
     background-color: #4CAF50;
     color: white;
+}
+.cajita{
+    display: flex;
+    flex-wrap: wrap;
 }
