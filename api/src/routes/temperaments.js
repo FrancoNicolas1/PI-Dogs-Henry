@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { infoTotal } = require("../controller");
+const { infoTotal, infoApi } = require("../controller");
 const { Dog, Temperament } = require("../db");
 // const {infoTotal} = require("../controller/index")
 // Importar todos los routers;
@@ -8,11 +8,12 @@ const { Dog, Temperament } = require("../db");
 const router = Router();
 
 router.get("/", async (req, res) => {
-  const dogsAll = await infoTotal();
-  const everyTemperament = dogsAll
-    .map((dog) => (dog.temperament ? dog.temperament : "No info"))
-    .map((dog) => dog?.split(", "));
-  const finalTemperament = [...new Set(everyTemperament.flat())];
+  const dogsAll = await infoApi();
+  // console.log({dogsAll})
+  const everyTemperament = dogsAll.map((dog) => (dog.temperaments ? dog.temperaments : "No tiene Temperamento"))
+    const temperamentEvery= everyTemperament.map((dog) => dog?.split(", "));
+  const finalTemperament = [...new Set(temperamentEvery.flat())];
+  // console.log({finalTemperament})
   finalTemperament.forEach((e) => {
     Temperament.findOrCreate({
       where: { name: e },

@@ -1,0 +1,9 @@
+.container{
+    display: flex;
+    background-image: url("../Imagenes/perritoRascando.gif");
+   width: 500px;
+   height: 500px;
+   justify-content: center;
+   align-items: center;
+   margin-left: 500px;
+}

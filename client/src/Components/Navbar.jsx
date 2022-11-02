@@ -16,6 +16,9 @@ export default function Navbar(){
     }
     const handleSubmit=(e)=>{
         e.preventDefault()
+        if(name.length < 1){
+            alert("Escribi un nombre valido")
+        }
         dispatch(getDogName(name))
     }
 

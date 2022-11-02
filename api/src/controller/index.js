@@ -19,7 +19,8 @@ const infoApi = async () => {
       weight_min: pesoMin ? pesoMin : 1,
       life_span: e.life_span,
       image: e.image.url,
-      temperament: e.temperament,
+      temperaments: e.temperament? e.temperament : "No tiene Temperamento",
+  
     };
   });
   return dogsInfo;
@@ -35,7 +36,9 @@ const infoDb = async () => {
       },
     },
   });
-  return dB;
+  let dato = JSON.parse(JSON.stringify(dB,null,2))
+    dato.forEach(el => el.temperaments = el.temperaments.map(el => el.name))
+    return dato
 };
 
 const infoTotal = async () => {
@@ -47,4 +50,5 @@ const infoTotal = async () => {
 
 module.exports = {
   infoTotal,
+  infoApi
 };

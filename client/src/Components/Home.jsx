@@ -9,11 +9,14 @@ import Navbar from "./Navbar";
 import Paginado from "./Paginado";
 import moduleHome from "../Css/Home.module.css"
 import { Link } from "react-router-dom";
+import { e } from "mathjs";
+import Loading from "./Loading";
 
 
 export default function Home (){
     const dispatch= useDispatch()
     const dogs =useSelector((state)=>state.allDogs)
+    const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage]=useState(1)//pagina actual
     const [dogsForPage, setDogPage]= useState(8)//dogs por pagina
     const indexOfLastDog = currentPage * dogsForPage // 8
@@ -21,16 +24,22 @@ export default function Home (){
     const currentDogs = dogs.slice(indexOfFirtsDog,indexOfLastDog)// 0-8....9-16
     // if(dogs.length === 0 ) <h1>NO HAY PERROS</h1
   
+
+
     const pag = (pageNumber)=>{
         setCurrentPage(pageNumber)
     }
 
 
     useEffect(()=>{
+        setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
         dispatch(getAll())
+       
     },[])
-    // console.log(dogs)
-    // console.log(temperaments)
+   
     const handleChange=(e)=>{
         e.preventDefault()
         dispatch(refreshDogs())
@@ -40,13 +49,17 @@ export default function Home (){
     
     return(
         <div className={moduleHome.container}>
+             {loading? (
+            <div>
+                <Loading/>
+            </div>):(<div>
             <div className={moduleHome.header}>
                 <button className={moduleHome.button} onClick={handleChange}>Refresh</button>
                 <Navbar/>
                <Link to={"/form"}> <button className={moduleHome.button}>Create</button></Link>
             </div>
-            <Filter setCurrentPage={setCurrentPage} />
-            <Paginado dogsForPage={dogsForPage} dogs={dogs.length} pag={pag} currentPage={currentPage}/>
+            <Filter setCurrentPage={setCurrentPage}  />
+            <Paginado dogsForPage={dogsForPage} dogs={dogs.length} pag={pag} currentPage={currentPage} />
             <div className={moduleHome.cards}>
             {currentDogs?.map((dog)=>{
                 return(
@@ -55,13 +68,15 @@ export default function Home (){
                      id={dog.id}
                      name={dog.name}
                      img={dog.image}
-                     temperament={dog.temperament}
+                     temperament={dog.created ? dog.temperaments.map((e)=>e+","): dog.temperaments}
                      weight_max={dog.weight_max}
-                     weight_min={dog.weight_min} />  
+                     weight_min={dog.weight_min}
+                     />  
                     </div>
                 )
             })}
             </div>
+            </div>)}
 
         </div>
     )

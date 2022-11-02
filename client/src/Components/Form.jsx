@@ -2,13 +2,17 @@ import React from "react";
 import moduleForme from "../Css/Form.module.css"
 import {useDispatch, useSelector} from "react-redux"
 import { useEffect } from "react";
-import { temperamentsDogs } from "../Redux/action";
+import { getAll, postDogs, temperamentsDogs } from "../Redux/action";
 import { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 export  default function Form (){
     const temperaments =useSelector((state)=>state.temperaments)
+    const dogs =useSelector((state)=>state.allDogs)
     const dispatch = useDispatch()
+    const history = useHistory();
     useEffect(()=>{
         dispatch(temperamentsDogs())
+        dispatch(getAll())
     },[])
     const [errorForm,setErrorForm]=useState({})
     const [newDog, setNewDog]= useState({
@@ -23,6 +27,7 @@ export  default function Form (){
     })
 
     const handleChange=(e)=>{
+        e.preventDefault()
         setNewDog({
             ...newDog,
             [e.target.name]: e.target.value
@@ -33,6 +38,7 @@ export  default function Form (){
         }))
     }
     const handleChangeTemperaments=(e)=>{
+        e.preventDefault()
         setNewDog({
             ...newDog,
             temperaments:[...new Set([...newDog.temperaments,e.target.value])]
@@ -41,6 +47,7 @@ export  default function Form (){
     
 
     const handleDelete=(e)=>{
+        e.preventDefault()
         setNewDog({
             ...newDog,
             temperaments: newDog.temperaments.filter(temperament => temperament !== e)
@@ -51,6 +58,8 @@ export  default function Form (){
     const validate =(error)=>{
      
         let errors={}
+        
+       
         if(!error.name || error.name.length > 10){
             errors.name = "Ingrese nombre, que no superen los 10 caracteres"
         }
@@ -103,7 +112,7 @@ export  default function Form (){
             errors.height_max="No debe superar mas de 99 de altura"
         }
         ///////////////////////////////
-      
+     
         ////////////////////////////
         if(!error.image){
             errors.image= "Debe ingresar una imagen"
@@ -114,16 +123,39 @@ export  default function Form (){
             if(!reg_exImg.test(error.image)){
                 errors.image="Se requiere imagen"
             }
-        
-    }
+        }
+        ////////////////////////////////////
+        if(!error.life_span){
+            errors.life_span="Debe ingresar un dato"
+        }else if(error.life_span < 1){
+            errors.life_span = "No se permite numeros negativos"
+        }
+        else if(!/^([0-9])*$/.test(error.life_span)){
+            errors.life_span = "Solo numeros enteros"
+        }
+        else if(error.life_span > 40){
+            errors.life_span="No debe superar mas de 40 años de vida"
+        }
+///////////////////////////////////////
+        if(error.temperaments.length < 1){
+            errors.temperaments="debe tener un tempereamneto"
+        }
+
+   
         return errors
     }
 
     const handleSubmit=(e)=>{
         e.preventDefault()
-       console.log("pepe")
+    //    console.log("pepe")
        if (Object.values(errorForm).length > 0) {
         alert("Por favor complete la información requerida");
+    }
+
+    else{
+        dispatch(postDogs(newDog))
+        alert("Raza creada")
+        // history.push('/home')
     }
 }
     
@@ -141,7 +173,7 @@ export  default function Form (){
                 value={newDog.name}
                 onChange={handleChange}
                 />
-                {errorForm.name? <h4>{errorForm.name}</h4>:false}
+                {errorForm.name? <h4 className={moduleForme.h4}>{errorForm.name}</h4>:false}
                 </div>
 {/* ////////////////////////////////////////////////////////////////////// */}
                 <div className={moduleForme.div}>
@@ -152,7 +184,7 @@ export  default function Form (){
                 name="weight_min"
                 onChange={handleChange}
                 />
-                {errorForm.weight_min? <h4>{errorForm.weight_min}</h4>:false}
+                {errorForm.weight_min? <h4 className={moduleForme.h4}>{errorForm.weight_min}</h4>:false}
 {/* ////////////////////////////////////////////////////////////////////////                 */}
                 </div>
                 <div className={moduleForme.div}>
@@ -162,7 +194,7 @@ export  default function Form (){
                 name="weight_max"
                 onChange={handleChange}
                 />
-                {errorForm.weight_max? <h4>{errorForm.weight_max}</h4>:false}
+                {errorForm.weight_max? <h4 className={moduleForme.h4}>{errorForm.weight_max}</h4>:false}
 {/* ////////////////////////////////////////////////////////////// */}
                 </div>
                 <div className={moduleForme.div}>
@@ -173,7 +205,7 @@ export  default function Form (){
                 onChange={handleChange}
                 />
                 </div>
-                {errorForm.height_min ? <h4>{errorForm.height_min}</h4>:false}
+                {errorForm.height_min ? <h4 className={moduleForme.h4}>{errorForm.height_min}</h4>:false}
 {/* ///////////////////////////////////////////////////////////////////////                 */}
                 <div className={moduleForme.div}>
                 <label>Altura Max</label>
@@ -183,18 +215,36 @@ export  default function Form (){
                 onChange={handleChange}
                 />
                 </div>
-                {errorForm.height_max? <h4>{errorForm.height_max}</h4>:false}
+                {errorForm.height_max? <h4 className={moduleForme.h4}>{errorForm.height_max}</h4>:false}
 {/* /////////////////////////////////////////////////////////////////                 */}
                 <div className={moduleForme.div}>
                     <label>Años de vida</label>
                 <input 
-                type="text"
+                type="number"
                 name="life_span"
                 onChange={handleChange}
                 />
                 </div>
-                {errorForm.life_span? <h4>{errorForm.life_span}</h4>:false}
- {/* ////////////////////////////////////////////////////////////////////                */}
+                {errorForm.life_span? <h4 className={moduleForme.h4}>{errorForm.life_span}</h4>:false}
+ {/* ////////////////////////////////////////////////////////////////////  */}
+
+                 <select 
+                onChange={handleChangeTemperaments}
+                className={moduleForme.option}>
+            {temperaments?.map((temperament)=>
+                    <option value={temperament.name} key={temperament.id} >{temperament.name}</option>
+            )}
+            </select>
+    
+            {newDog.temperaments.map((temperamento) =>
+        <div className={moduleForme.cajita}>
+            <p>{temperamento}</p>
+            <button onClick={()=>handleDelete(temperamento)}>x</button>
+        </div>)}
+
+
+        {errorForm.temperaments? <h4 className={moduleForme.h4}>falta temperamento</h4>:false}
+
             <div className={moduleForme.div}>
                     <label>Imagen</label>
                 <input 
@@ -203,7 +253,7 @@ export  default function Form (){
                 onChange={handleChange}
                 />
             </div>
-            {errorForm.image? <h4>{errorForm.image}</h4>:false}
+            {errorForm.image? <h4 className={moduleForme.h4}>{errorForm.image}</h4>:false}
             {reg_exUrl.test(newDog.image) && reg_exImg.test(newDog.image) && 
             <div>
                 <img src={newDog.image} width="150px" height="100px"/>
@@ -212,18 +262,7 @@ export  default function Form (){
 
 
 {/* ////////////////////////////////// */}
-                <select 
-                onChange={handleChangeTemperaments}
-                className={moduleForme.option}>
-            {temperaments?.map((temperament)=>
-                    <option value={temperament.name} >{temperament.name}</option>
-            )}
-            </select>
-            {newDog.temperaments.map((temperamento) =>
-        <div className={moduleForme.cajita}>
-            <p>{temperamento}</p>
-            <button onClick={()=>handleDelete(temperamento)}>x</button>
-        </div>)}
+        
  {/* //////////////////////////////////////////////////////////////            */}
            
  {/* //////////////////////////////////////////            */}
@@ -233,7 +272,7 @@ export  default function Form (){
         
             
         </div>
-            
+           
         </div>
         
     )

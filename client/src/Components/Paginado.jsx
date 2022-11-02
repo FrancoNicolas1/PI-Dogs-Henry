@@ -18,7 +18,7 @@ export default function Paginado({dogsForPage, dogs, pag, currentPage}){
         <div className={modulePaginado.container}>
         <button className={modulePaginado.prev} onClick={prevHandler}>prev</button>
                 {pageNumbers?.map((number)=>(
-                    <button className={modulePaginado.number} onClick={()=> pag(number)}>{number}</button>
+                    <button key={number} className={modulePaginado.number} onClick={()=> pag(number)}>{number}</button>
                 )
                 )}
         <button className={modulePaginado.next} onClick={nextHandler}>next</button>

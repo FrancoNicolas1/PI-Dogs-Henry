@@ -11,19 +11,23 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   const { name } = req.query;
   const allDogs = await infoTotal();
-  if (name) {
-    const dogName = allDogs.filter((e) =>
-      e.name.toLowerCase().includes(name.toLowerCase())
+  if (name) {    
+    
+    const dogName = allDogs.filter((e) =>e.name.toLowerCase().includes(name.toLowerCase())
     );
     dogName.length
       ? res.status(200).json(dogName)
       : res.status(404).send("No existe");
-  } else {
+
+  }
+  
+   else {
     res.status(200).json(allDogs);
   }
+  
 });
 
 router.get("/:id", async (req, res) => {
@@ -69,5 +73,7 @@ router.post("/", async (req, res) => {
     console.log(error);
   }
 });
+
+
 
 module.exports = router;
