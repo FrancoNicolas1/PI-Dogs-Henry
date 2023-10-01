@@ -22,7 +22,7 @@ const infoApi = async () => {
       temperaments: e.temperament ? e.temperament : "No tiene Temperamento",
     };
   });
-  console.log(dogsInfo);
+
   return dogsInfo;
 };
 
