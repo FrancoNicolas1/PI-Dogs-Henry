@@ -4,8 +4,8 @@ const { Dog, Temperament } = require("../db");
 const infoApi = async () => {
   const apiDogsTotal = await axios.get("https://api.thedogapi.com/v1/breeds");
   const dogsInfo = apiDogsTotal.data.map((e) => {
-    const peso = e.weight.metric.split("-")
-    const altura = e.height.metric.split("-")
+    const peso = e.weight.metric.split("-");
+    const altura = e.height.metric.split("-");
     const pesoMin = parseInt(peso[0]);
     const pesoMax = parseInt(peso[1]);
     const alturaMin = parseInt(altura[0]);
@@ -13,16 +13,16 @@ const infoApi = async () => {
     return {
       id: e.id,
       name: e.name,
-      height_max: alturaMax ? alturaMax : 1,  
+      height_max: alturaMax ? alturaMax : 1,
       height_min: alturaMin ? alturaMin : 1,
       weight_max: pesoMax ? pesoMax : 1,
       weight_min: pesoMin ? pesoMin : 1,
       life_span: e.life_span,
-      image: e.image.url,
-      temperaments: e.temperament? e.temperament : "No tiene Temperamento",
-  
+      // image: e.image.url,
+      temperaments: e.temperament ? e.temperament : "No tiene Temperamento",
     };
   });
+  console.log(dogsInfo);
   return dogsInfo;
 };
 
@@ -36,9 +36,11 @@ const infoDb = async () => {
       },
     },
   });
-  let dato = JSON.parse(JSON.stringify(dB,null,2))
-    dato.forEach(el => el.temperaments = el.temperaments.map(el => el.name))
-    return dato
+  let dato = JSON.parse(JSON.stringify(dB, null, 2));
+  dato.forEach(
+    (el) => (el.temperaments = el.temperaments.map((el) => el.name))
+  );
+  return dato;
 };
 
 const infoTotal = async () => {
@@ -50,5 +52,5 @@ const infoTotal = async () => {
 
 module.exports = {
   infoTotal,
-  infoApi
+  infoApi,
 };
