@@ -1,6 +1,7 @@
 const { default: axios } = require("axios");
 const { Dog, Temperament } = require("../db");
 //codigo viego
+
 // const infoApi = async () => {
 //   const apiDogsTotal = await axios.get("https://api.thedogapi.com/v1/breeds");
 //   const dogsInfo = apiDogsTotal.data.map((e) => {
@@ -14,7 +15,7 @@ const { Dog, Temperament } = require("../db");
 //       id: e.id,
 //       name: e.name,
 //       height_max: alturaMax ? alturaMax : 1,
-//       height_min: alturaMin ? alturaMin : 1,
+//       height_min: alturaMin ? alturaMin :  1,
 //       weight_max: pesoMax ? pesoMax : 1,
 //       weight_min: pesoMin ? pesoMin : 1,
 //       life_span: e.life_span,
