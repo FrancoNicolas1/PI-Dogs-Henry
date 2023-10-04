@@ -21,7 +21,7 @@ export function getAll() {
       });
   };
 }
-//holaa
+//holaaa
 export function getDogId(id) {
   return (dispatch) => {
     fetch(`http://localhost:3001/dogs/${id}`)
