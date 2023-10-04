@@ -9,7 +9,7 @@ const { Dog, Temperament } = require("../db");
 const router = Router();
 
 // Configurar los routers
-// Ejemplo: router.use('/auth', authRouter)
+// Ejemplo: router.use('/auth', authRouter )
 router.get("/", async (req, res, next) => {
   console.log("khe");
   const { name } = req.query;
