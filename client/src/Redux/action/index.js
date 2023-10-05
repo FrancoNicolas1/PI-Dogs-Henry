@@ -11,7 +11,7 @@ export const ORDER_CREATE = "ORDER_CREATE";
 
 export function getAll() {
   return (dispatch) => {
-    fetch("http://localhost:3001/dogs")
+    fetch("https://pi-dogs-henry-production-5271.up.railway.app/dogs")
       .then((res) => res.json())
       .then((json) => {
         dispatch({
@@ -24,7 +24,7 @@ export function getAll() {
 //holaaa
 export function getDogId(id) {
   return (dispatch) => {
-    fetch(`http://localhost:3001/dogs/${id}`)
+    fetch(`https://pi-dogs-henry-production-5271.up.railway.app/dogs/${id}`)
       .then((res) => res.json())
       .then((json) => {
         dispatch({
@@ -53,7 +53,9 @@ export function getDogId(id) {
 // }
 export const getDogName = (name) => async (dispatch) => {
   try {
-    return await fetch(`http://localhost:3001/dogs?name=${name}`)
+    return await fetch(
+      `https://pi-dogs-henry-production-5271.up.railway.app/dogs?name=${name}`
+    )
       .then((res) => res.json())
       .then((json) =>
         dispatch({
@@ -89,7 +91,7 @@ export function orderWeigthMinMax(payload) {
 
 export function temperamentsDogs() {
   return (dispatch) => {
-    fetch("http://localhost:3001/temperaments")
+    fetch("https://pi-dogs-henry-production-5271.up.railway.app/temperaments")
       .then((res) => res.json())
       .then((json) => {
         dispatch({
@@ -110,7 +112,10 @@ export function postDogs(payload) {
   return async function (dispatch) {
     try {
       console.log(payload);
-      const json = await axios.post("http://localhost:3001/dogs", payload);
+      const json = await axios.post(
+        "https://pi-dogs-henry-production-5271.up.railway.app/dogs",
+        payload
+      );
       console.log(json);
       return json;
     } catch (error) {
